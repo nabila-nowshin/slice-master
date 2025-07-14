@@ -1,14 +1,18 @@
-
 import { useDispatch, useSelector } from "react-redux";
-import { clearCart, removeFromCart } from "../store/cartSlice";
+import {
+  clearCart,
+  decreaseQuantity,
+  removeFromCart,
+} from "../store/cartSlice";
 
 const Cart = () => {
+  const { items, totalQuantity, totalPrice } = useSelector(
+    (state) => state.cart
+  );
 
-    const {items,totalQuantity, totalPrice}=useSelector((state)=> state.cart);
-
-    const dispatch=useDispatch();
-    return (
-<div className="max-w-xl mx-auto mt-8 p-4 border rounded shadow">
+  const dispatch = useDispatch();
+  return (
+    <div className="max-w-xl mx-auto mt-8 p-4 border rounded shadow">
       <h2 className="text-2xl font-semibold mb-4">🛒 Cart</h2>
 
       {items.map((item) => (
@@ -22,12 +26,22 @@ const Cart = () => {
               ${item.price} x {item.quantity}
             </p>
           </div>
-          <button
-            onClick={() => dispatch(removeFromCart(item.id))}
-            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-          >
-            Remove
-          </button>
+
+          <div className="flex">
+            <button
+              onClick={() => dispatch(decreaseQuantity(item.id))}
+              className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600 mr-2"
+            >
+              ➖
+            </button>
+
+            <button
+              onClick={() => dispatch(removeFromCart(item.id))}
+              className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+            >
+              Remove
+            </button>
+          </div>
         </div>
       ))}
 
