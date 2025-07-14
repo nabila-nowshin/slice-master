@@ -3,11 +3,13 @@ import {
   clearCart,
   decreaseQuantity,
   removeFromCart,
+  type CartItem,
 } from "../store/cartSlice";
+import type { RootState } from "../store/store";
 
 const Cart = () => {
   const { items, totalQuantity, totalPrice } = useSelector(
-    (state) => state.cart
+    (state: RootState) => state.cart
   );
 
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const Cart = () => {
     <div className="max-w-xl mx-auto mt-8 p-4 border rounded shadow">
       <h2 className="text-2xl font-semibold mb-4">🛒 Cart</h2>
 
-      {items.map((item) => (
+      {items.map((item: CartItem) => (
         <div
           key={item.id}
           className="flex justify-between items-center border-b py-2"
